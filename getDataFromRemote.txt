@@ -1,0 +1,34 @@
+package com.test;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.shuluan.body.BaseBody;
+import com.shuluan.util.HttpClientUtil;
+import com.shuluan.util.JsonUtil;
+
+public class Test {
+	public static void main(String[] args) {
+		String url = "http://122.224.164.250:1085/interface/GetOilTradeList.ashx";
+		Map<String, String> header = new HashMap<String, String>();
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("LastUploadTime", "");
+		params.put("LastStationNo", "");
+		params.put("LastFlowNo", 0);
+		params.put("Count", 100);
+		Map<String, Object> token = new HashMap<String, Object>();
+		token.put("StationNo", "01");
+		token.put("Version", "1.0");
+		token.put("Auth_ID", "ZLSY");
+		token.put("TokenStr", "7F3E197369FEBBCB910CA805B35A9BD9");
+		token.put("SystemType", 1001);
+		token.put("OperatorNo", "");
+		token.put("OperatorName", "");
+		params.put("Token", token);
+		String resp = HttpClientUtil.requestPost(url, header, params);
+		BaseBody body = JsonUtil.toObject(resp, BaseBody.class);
+		List<Map<String, Object>> oilTradeList = (List<Map<String, Object>>) body.getData();
+		
+	}
+}
